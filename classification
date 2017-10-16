@@ -1,0 +1,58 @@
+## 分類(Classification)について
+
+分類について、説明文をかく
+
+Oracle Data Mining は、分類のためのアルゴリズムとして以下の4つのアルゴリズムを提供しています。
+
+*NB
+*DT
+*SVM
+*GLM
+----
+## テストデータの使い方
+
+この GitHub レポジトリの market_basket ディレクトリを参照します。
+
+テストデータ作成用の PL/SQL スクリプト（fruit_script.sql）を実行します。テストデータには以下の 1,350 件のトランザクションが含まれます。
+
+* ベースとなるデータ
+    * 合計で 1,000 件のトランザクション
+    * apple, orange はうち 2割 で購入されている
+    * banana はうち 4割 で購入されている
+    * melon, mango, papaya, pineapple はうち 1割 で購入されている
+
+* バイアスを掛けるための追加データ
+    * apple と pineapple の同時購入が 300 件（例. PPAP が流行った）
+    * mango と papaya と pineapple の同時購入が 50 件（例. トロピカルスムージーのレシピが流行った）
+
+<img src="https://user-images.githubusercontent.com/4862919/29019103-817718a6-7b98-11e7-8360-06137dd58958.jpg" width=400px><br>
+
+ワークフロー（フルーツの併売分析.xml）をインポートします。
+
+* SQL Developer > Data Miner タブ > プロジェクトを作成 > ワークフローのインポート
+
+<img src="https://user-images.githubusercontent.com/4862919/29019474-97ed7c8c-7b99-11e7-876f-90035e23c3d7.jpg" width=300px><br>
+
+<img src="https://user-images.githubusercontent.com/4862919/29020419-e4918cc4-7b9c-11e7-8a5c-665ee9cdac53.jpg" width=400px><br>
+
+SQL クエリ（fruit_query.sql）で併売ルールを取得します。
+
+まず、pineapple が売れるとき、一緒に売れるものを確認します。
+
+<img src="https://user-images.githubusercontent.com/4862919/29020701-e27daa0c-7b9d-11e7-8d64-0349bdc1b0f3.jpg" width=400px><br>
+
+<img src="https://user-images.githubusercontent.com/4862919/29020726-fac09282-7b9d-11e7-82e6-c50576c7d5b3.jpg" width=400px><br>
+
+<img src="https://user-images.githubusercontent.com/4862919/29020749-07c03668-7b9e-11e7-925c-da6e6057d72b.jpg" width=400px><br>
+
+apple のリフト値が最も高いことがわかります。
+
+次に、pineapple に加えて mango が一緒に売れるとき、さらに一緒に売れるものを確認します。
+
+<img src="https://user-images.githubusercontent.com/4862919/29020794-204201da-7b9e-11e7-8c54-ff0957473cf4.jpg" width=400px><br>
+
+<img src="https://user-images.githubusercontent.com/4862919/29020804-2ce9b59a-7b9e-11e7-867f-d8092b9f5fd6.jpg" width=400px><br>
+
+<img src="https://user-images.githubusercontent.com/4862919/29020825-3c72c0ba-7b9e-11e7-84ae-8742deb7124f.jpg" width=400px><br>
+
+この場合は、apple よりも papaya のリフト値が高いことがわかります。
